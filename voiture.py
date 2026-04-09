@@ -6,3 +6,5 @@ class Voiture:
         self.annee = annee
         self.prix = prix
 
+    def afficher_voiture(self):
+        print( f"ID: {self.id} | Marque: {self.marque} | Modèle: {self.modele} | Année: {self.annee} | Prix: {self.prix}$")
