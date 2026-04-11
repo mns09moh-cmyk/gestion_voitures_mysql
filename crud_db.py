@@ -1,5 +1,6 @@
 import json
 import mysql.connector
+from voiture import Voiture 
 
 def connecter_db():
     try:
@@ -94,6 +95,38 @@ def supprimer_voiture(id_voiture):
 
     except mysql.connector.Error as err:
         print(f"Erreur lors de la suppression : {err}")
+def recuperer_Voitures():
+    connexion = connecter_db()
+
+    if connexion is None:
+        return []
+
+    voitures = []
+
+    try:
+        curseur = connexion.cursor()
+        requete = "SELECT id, marque, modele, annee, prix FROM voiture"
+        curseur.execute(requete)
+
+        resultats = curseur.fetchall()
+
+        for ligne in resultats:
+            voiture = Voiture(
+                marque=ligne[1],
+                modele=ligne[2],
+                annee=ligne[3],
+                prix=float(ligne[4]),
+                id=ligne[0]
+            )
+            voitures.append(voiture)
+
+        curseur.close()
+        connexion.close()
+
+    except mysql.connector.Error as err:
+        print(f"Erreur lors de la récupération : {err}")
+
+    return voitures
 
 
 
