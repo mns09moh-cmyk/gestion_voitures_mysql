@@ -28,3 +28,14 @@ def tester_ajout():
     v3.afficher_voiture()
 
     return v1, v2, v3
+def tester_affichage():
+    print("\n=== TEST RECUPERATION / AFFICHAGE ===")
+    voitures = recuperer_voitures()
+
+    if len(voitures) == 0:
+        print("Aucune voiture trouvée.")
+    else:
+        for voiture in voitures:
+            voiture.afficher_voiture()
+
+    return voitures
