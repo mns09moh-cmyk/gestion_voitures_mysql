@@ -71,6 +71,29 @@ def ajouter_voiture(voiture):
 
     except mysql.connector.Error as err:
         print(f"Erreur lors de l'ajout : {err}")
+def supprimer_voiture(id_voiture):
+    connexion = connecter_db()
+
+    if connexion is None:
+        return
+
+    try:
+        curseur = connexion.cursor()
+        requete = "DELETE FROM voiture WHERE id = %s"
+
+        curseur.execute(requete, (id_voiture,))
+        connexion.commit()
+
+        if curseur.rowcount > 0:
+            print(f"Voiture avec ID {id_voiture} supprimée avec succès.")
+        else:
+            print(f"Aucune voiture trouvée avec ID {id_voiture}.")
+
+        curseur.close()
+        connexion.close()
+
+    except mysql.connector.Error as err:
+        print(f"Erreur lors de la suppression : {err}")
 
 
 
