@@ -1,6 +1,6 @@
 import json
 import mysql.connector
-from voiture import Voiture 
+from voiture import Voiture
 
 def connecter_db():
     try:
@@ -116,7 +116,7 @@ def recuperer_Voitures():
                 modele=ligne[2],
                 annee=ligne[3],
                 prix=float(ligne[4]),
-                id=ligne[0]
+                id_voiture=ligne[0]
             )
             voitures.append(voiture)
 
@@ -127,6 +127,35 @@ def recuperer_Voitures():
         print(f"Erreur lors de la récupération : {err}")
 
     return voitures
+def modifier_voiture(voiture):
+    connexion = connecter_db()
+
+    if connexion is None:
+        return
+
+    try:
+        curseur = connexion.cursor()
+        requete = """
+        UPDATE voiture
+        SET marque = %s, modele = %s, annee = %s, prix = %s
+        WHERE id = %s
+        """
+        valeurs = (voiture.marque, voiture.modele, voiture.annee, voiture.prix, voiture.id)
+
+        curseur.execute(requete, valeurs)
+        connexion.commit()
+
+        if curseur.rowcount > 0:
+            print(f"Voiture avec ID {voiture.id} modifiée avec succès.")
+        else:
+            print(f"Aucune voiture trouvée avec ID {voiture.id}.")
+
+        curseur.close()
+        connexion.close()
+
+    except mysql.connector.Error as err:
+        print(f"Erreur lors de la modification : {err}")
+
 
 
 
