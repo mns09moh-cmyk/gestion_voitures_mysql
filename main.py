@@ -50,3 +50,20 @@ def tester_modification(voiture):
 
     modifier_voiture(voiture)
     voiture.afficher_voiture()
+if __name__ == "__main__":
+    tester_connexion()
+
+    v1, v2, v3 = tester_ajout()
+
+    print("\nListe après ajout :")
+    tester_affichage()
+
+    tester_suppression(v2.id)
+
+    print("\nListe après suppression :")
+    tester_affichage()
+
+    tester_modification(v1)
+
+    print("\nListe après modification :")
+    tester_affichage()
