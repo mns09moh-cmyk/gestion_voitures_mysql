@@ -44,6 +44,33 @@ def creer_table_voiture(connexion):
 
     except mysql.connector.Error as err:
         print(f"Erreur lors de la création de la table : {err}")
+def ajouter_voiture(voiture):
+    connexion = connecter_db()
+
+    if connexion is None:
+        return
+
+    try:
+        creer_table_voiture(connexion)
+
+        curseur = connexion.cursor()
+        requete = """
+        INSERT INTO voiture (marque, modele, annee, prix)
+        VALUES (%s, %s, %s, %s)
+        """
+        valeurs = (voiture.marque, voiture.modele, voiture.annee, voiture.prix)
+
+        curseur.execute(requete, valeurs)
+        connexion.commit()
+
+        voiture.id = curseur.lastrowid
+
+        print("Voiture ajoutée avec succès.")
+        curseur.close()
+        connexion.close()
+
+    except mysql.connector.Error as err:
+        print(f"Erreur lors de l'ajout : {err}")
 
 
 
