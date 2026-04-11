@@ -72,7 +72,7 @@ def ajouter_voiture(voiture):
 
     except mysql.connector.Error as err:
         print(f"Erreur lors de l'ajout : {err}")
-def supprimer_voiture(id_voiture):
+def supprimer_voiture(id):
     connexion = connecter_db()
 
     if connexion is None:
@@ -82,20 +82,20 @@ def supprimer_voiture(id_voiture):
         curseur = connexion.cursor()
         requete = "DELETE FROM voiture WHERE id = %s"
 
-        curseur.execute(requete, (id_voiture,))
+        curseur.execute(requete, (id,))
         connexion.commit()
 
         if curseur.rowcount > 0:
-            print(f"Voiture avec ID {id_voiture} supprimée avec succès.")
+            print(f"Voiture avec ID {id} supprimée avec succès.")
         else:
-            print(f"Aucune voiture trouvée avec ID {id_voiture}.")
+            print(f"Aucune voiture trouvée avec ID {id}.")
 
         curseur.close()
         connexion.close()
 
     except mysql.connector.Error as err:
         print(f"Erreur lors de la suppression : {err}")
-def recuperer_Voitures():
+def recuperer_voitures():
     connexion = connecter_db()
 
     if connexion is None:
@@ -116,7 +116,7 @@ def recuperer_Voitures():
                 modele=ligne[2],
                 annee=ligne[3],
                 prix=float(ligne[4]),
-                id_voiture=ligne[0]
+                id=ligne[0]
             )
             voitures.append(voiture)
 
