@@ -39,3 +39,6 @@ def tester_affichage():
             voiture.afficher_voiture()
 
     return voitures
+def tester_suppression(id_voiture):
+    print("\n=== TEST SUPPRESSION ===")
+    supprimer_voiture(id_voiture)
