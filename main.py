@@ -42,3 +42,11 @@ def tester_affichage():
 def tester_suppression(id_voiture):
     print("\n=== TEST SUPPRESSION ===")
     supprimer_voiture(id_voiture)
+def tester_modification(voiture):
+    print("\n=== TEST MODIFICATION ===")
+    voiture.modele = "Corolla SE"
+    voiture.annee = 2021
+    voiture.prix = 19999.99
+
+    modifier_voiture(voiture)
+    voiture.afficher_voiture()
